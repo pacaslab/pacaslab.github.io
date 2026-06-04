@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Paca's Lab — base layer
+   Warm, editorial, quiet. Paper canvas, ink type, bordeaux as the one accent.
+--------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --hairline: rgba(20, 17, 15, 0.12);
+    --hairline-light: rgba(245, 241, 234, 0.16);
+  }
+
+  * {
+    border-color: var(--hairline);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv01", "cv11";
+  }
+
+  /* Brand-tinted selection. */
+  ::selection {
+    background: #901818;
+    color: #f5f1ea;
+  }
+
+  /* Quiet, accessible focus rings. */
+  :focus-visible {
+    outline: 2px solid #901818;
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Honour reduced-motion everywhere: kill smooth scroll + long transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* The micro eyebrow label used throughout (e.g. "01 — Collezione"). */
+  .label {
+    @apply font-sans text-[0.7rem] uppercase tracking-label text-clay;
+  }
+
+  /* Hairline divider that adapts to light/dark sections. */
+  .rule {
+    @apply h-px w-full bg-current opacity-10;
+  }
+
+  /* Underline-on-hover editorial link. */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-500 ease-editorial;
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Hide scrollbars on horizontal marquees without disabling scroll. */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
