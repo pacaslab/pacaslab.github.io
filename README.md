@@ -1,2 +1,2 @@
-# pacaslab.github.io
-Official Paca's website
+# Paca's
+Build to adapt
