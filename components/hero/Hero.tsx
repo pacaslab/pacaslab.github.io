@@ -37,10 +37,10 @@ function hasWebGL() {
 }
 
 /**
- * Hero — pure white, in two stacked bands:
+ * Hero — warm paper background, in two stacked bands:
  *   · upper band  → the floating bordeaux 3D chameleon (reacts to pointer / gyro)
- *   · lower band  → the PACA'S wordmark + statement + CTA, on clean white
- * Keeping them apart guarantees the bordeaux wordmark always sits on white
+ *   · lower band  → the PACA'S wordmark + statement + CTA, on clean paper background
+ * Keeping them apart guarantees the bordeaux wordmark always sits on paper
  * (never on the red of the chameleon), so it stays the legible focal point.
  */
 export function Hero() {
@@ -104,8 +104,8 @@ export function Hero() {
   };
 
   return (
-    <section className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden bg-white text-ink">
-      {/* Soft bordeaux gradient — depth without breaking the white minimalism */}
+    <section className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden bg-paper text-ink">
+      {/* Soft bordeaux gradient — depth without breaking the paper minimalism */}
       <div
         aria-hidden
         className="absolute inset-0 [background:radial-gradient(54%_42%_at_50%_34%,rgba(144,24,24,0.10),transparent_72%)]"
@@ -129,15 +129,9 @@ export function Hero() {
             <Logo mark="chameleon" variant="bordeaux" priority className="w-[min(54vw,300px)]" />
           </div>
         )}
-
-        {/* Safety fade so nothing red ever bleeds behind the wordmark */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-white"
-        />
       </div>
 
-      {/* Lower band — wordmark + statement + CTA, always on clean white */}
+      {/* Lower band — wordmark + statement + CTA, always on clean paper */}
       <motion.div
         variants={container}
         initial="hidden"

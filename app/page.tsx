@@ -2,16 +2,8 @@ import { Hero } from "@/components/hero/Hero";
 import { About } from "@/components/sections/About";
 import { Products } from "@/components/sections/Products";
 import { CallToAction } from "@/components/sections/CallToAction";
-import { Ticker } from "@/components/ui/Ticker";
 import { site } from "@/lib/site";
 
-const TICKER_ITEMS = [
-  "Built to adapt",
-  "Camaleonte",
-  "Made in Italy",
-  "Paca’s Lab",
-  "Costruito per adattarsi",
-];
 
 // Minimal structured data for richer search results.
 const jsonLd = {
@@ -31,10 +23,6 @@ export default function HomePage() {
     <>
       <Hero />
 
-      {/* Brand ticker — keeps the ink mood for one beat before the page opens up */}
-      <div className="border-y border-paper/10 bg-ink py-6 text-paper">
-        <Ticker items={TICKER_ITEMS} />
-      </div>
 
       <About />
       <Products />
