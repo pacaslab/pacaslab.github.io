@@ -12,7 +12,7 @@ export const site = {
     "Paca's Lab — abbigliamento contemporaneo Made in Italy. Capi essenziali costruiti per adattarsi, con il camaleonte come firma.",
   url: "https://pacaslab.github.io",
   locale: "it_IT",
-  email: "ciao@pacaslab.com",
+  // email: "ciao@pacaslab.com",
   nav: [
     { label: "Manifesto", href: "#manifesto" },
     { label: "Collezione", href: "#collezione" },

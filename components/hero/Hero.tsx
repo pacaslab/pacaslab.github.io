@@ -79,7 +79,7 @@ export function Hero() {
           .then((r) => {
             if (r === "granted") window.addEventListener("deviceorientation", onOrient);
           })
-          .catch(() => {});
+          .catch(() => { });
       }
       window.removeEventListener("touchstart", onFirstTouch);
     };
@@ -139,7 +139,7 @@ export function Hero() {
         className="relative z-10 flex flex-col items-center px-6 pb-[8vh] text-center"
       >
         <motion.p variants={item} className="label mb-6 text-clay">
-          Camaleonte — {site.tagline}
+          {site.tagline}
         </motion.p>
 
         <motion.div variants={item} className="flex flex-col items-center">
