@@ -31,7 +31,7 @@ export const site: SiteConfig = {
     { label: "Contatti", href: "#contatti" },
   ],
   social: [
-    { label: "Instagram", handle: "@pacaslab", href: "https://instagram.com/pacaslab" },
+    { label: "Instagram", handle: "@pacas_lab", href: "https://www.instagram.com/pacas_lab?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
     { label: "TikTok", handle: "@pacaslab", href: "https://tiktok.com/@pacaslab" },
   ],
 };
