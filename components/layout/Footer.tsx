@@ -58,14 +58,7 @@ export function Footer() {
                     </a>
                   </li>
                 ))}
-                <li>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="link-underline text-paper/80 hover:text-paper"
-                  >
-                    {site.email}
-                  </a>
-                </li>
+
               </ul>
             </div>
           </div>

@@ -168,6 +168,12 @@ function ProductLightbox({ product, onClose }: ProductLightboxProps) {
   const zoomY = useMotionValue(50);
   const transformOrigin = useTransform([zoomX, zoomY], ([zx, zy]) => `${zx}% ${zy}%`);
 
+  // Motion values for swipe-to-dismiss gesture (active only when not zoomed)
+  const dragY = useMotionValue(0);
+  const bgOpacity = useTransform(dragY, [-240, 0, 240], [0.65, 0.98, 0.65]);
+  const blurAmount = useTransform(dragY, [-240, 0, 240], [4, 12, 4]);
+  const backdropFilter = useTransform(blurAmount, (v) => `blur(${v}px)`);
+
   useEffect(() => {
     // Lock background scroll
     const originalOverflow = document.body.style.overflow;
@@ -223,7 +229,20 @@ function ProductLightbox({ product, onClose }: ProductLightboxProps) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClose}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-ink/98 p-6 text-paper backdrop-blur-md cursor-pointer"
+      drag={isZoomed ? false : "y"}
+      dragConstraints={{ top: 0, bottom: 0 }}
+      dragElastic={0.65}
+      onDragEnd={(e, info) => {
+        if (Math.abs(info.offset.y) > 140 || Math.abs(info.velocity.y) > 650) {
+          onClose();
+        }
+      }}
+      style={{
+        backgroundColor: useTransform(bgOpacity, (o) => `rgba(20, 17, 15, ${o})`),
+        backdropFilter,
+        y: dragY,
+      }}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-between p-6 text-paper cursor-pointer touch-none"
     >
       {/* Lightbox Header */}
       <div 
@@ -295,7 +314,7 @@ function ProductLightbox({ product, onClose }: ProductLightboxProps) {
         <p className="text-xs text-clay">
           {isZoomed
             ? "Trascina o muovi il cursore per esplorare i dettagli. Clicca di nuovo per uscire."
-            : "Clicca sull'immagine per zoomare, o clicca sullo sfondo per chiudere."}
+            : "Clicca per zoomare · Trascina verticalmente o clicca sullo sfondo per chiudere."}
         </p>
         <p className="mt-2 text-xs italic text-paper/60 md:mt-0">
           {product.tagline}

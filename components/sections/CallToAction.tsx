@@ -46,12 +46,7 @@ export function CallToAction() {
                 →
               </span>
             </a>
-            <a
-              href={`mailto:${site.email}`}
-              className="rounded-full border border-paper/40 px-7 py-3 text-sm text-paper transition-colors duration-300 ease-editorial hover:bg-paper/10"
-            >
-              Scrivici
-            </a>
+
           </div>
         </Reveal>
       </div>
