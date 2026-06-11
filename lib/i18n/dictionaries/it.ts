@@ -252,7 +252,7 @@ export const it = {
   productPage: {
     back: "Collezione",
     capsule: "Capsule 01",
-    orderCta: "Contattaci su Instagram",
+    orderCta: "Scrivici su Instagram",
     orderHint: "Scrivici per maggiori dettagli o richieste di informazioni.",
     materials: "Materiali",
     details: "Dettagli",
