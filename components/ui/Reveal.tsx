@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ElementType, ReactNode } from "react";
 
 interface RevealProps {
@@ -16,28 +16,30 @@ interface RevealProps {
 }
 
 /**
- * Scroll-reveal wrapper. Subtle fade + rise, fires once when the element
- * enters the viewport. Collapses to a plain fade when the user prefers
- * reduced motion.
+ * Scroll-reveal wrapper: a soft clip wipe plus a short rise, fired once when
+ * the element enters the viewport. Collapses to a plain fade under reduced
+ * motion.
  */
-export function Reveal({ children, delay = 0, y = 18, className, as = "div" }: RevealProps) {
+export function Reveal({ children, delay = 0, y = 26, className, as = "div" }: RevealProps) {
   const reduce = useReducedMotion();
   // Memoized so the motion component identity is stable across renders.
   const MotionTag = useMemo(() => motion.create(as), [as]);
 
-  const variants: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : y },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
     <MotionTag
       className={className}
-      variants={variants}
-      initial="hidden"
-      whileInView="visible"
+      initial={
+        reduce
+          ? { opacity: 0 }
+          : { opacity: 0, y, clipPath: "inset(6% 0% 24% 0%)" }
+      }
+      whileInView={
+        reduce
+          ? { opacity: 1 }
+          : { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)" }
+      }
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay }}
+      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay }}
     >
       {children}
     </MotionTag>

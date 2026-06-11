@@ -1,37 +1,26 @@
-import { Hero } from "@/components/hero/Hero";
-import { About } from "@/components/sections/About";
-import { Products } from "@/components/sections/Products";
-import { CallToAction } from "@/components/sections/CallToAction";
-import { site } from "@/lib/site";
+"use client";
 
+import { useEffect } from "react";
+import { ChameleonMark } from "@/components/ui/ChameleonMark";
 
-// Minimal structured data for richer search results.
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: site.name,
-  url: site.url,
-  logo: `${site.url}/assets/logos/wordmark-black.webp`,
-  image: `${site.url}/og.png`,
-  slogan: site.tagline,
-  description: site.description,
-  sameAs: site.social.map((s) => s.href),
-};
+/**
+ * Locale gateway. The static root picks a language from the browser and
+ * replaces itself with /it/ or /en/. A noscript fallback keeps it crawlable.
+ */
+export default function RootRedirect() {
+  useEffect(() => {
+    const prefersEn = /^en\b/i.test(navigator.language || "");
+    window.location.replace(prefersEn ? "/en/" : "/it/");
+  }, []);
 
-export default function HomePage() {
   return (
-    <>
-      <Hero />
-
-
-      <About />
-      <Products />
-      <CallToAction />
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-    </>
+    <div className="grain flex min-h-[100svh] flex-col items-center justify-center gap-6 bg-velluto text-paper">
+      <ChameleonMark className="w-16 animate-pulse" />
+      <noscript>
+        <p className="text-sm uppercase tracking-[0.18em]">
+          <a className="underline" href="/it/">Italiano</a> · <a className="underline" href="/en/">English</a>
+        </p>
+      </noscript>
+    </div>
   );
 }

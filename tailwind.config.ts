@@ -2,11 +2,14 @@ import type { Config } from "tailwindcss";
 
 /**
  * Paca's Lab design system.
- * Tokens are derived directly from the brand assets:
+ * Tokens are derived directly from the brand assets and the campaign video:
  *  - bordeaux  -> the chameleon print red (#901818)
- *  - ink       -> warm near-black used in the immersive hero
+ *  - velluto   -> the velvet curtains of the campaign video (hero, transitions)
+ *  - ink       -> warm near-black
  *  - paper     -> warm off-white editorial canvas
  *  - sand      -> the natural canvas of the tote bag / bucket hat
+ * One typeface only — Neue Haas Grotesk Display — with extreme weight contrast
+ * (XXThin 100 ... Black 900) doing the expressive work.
  */
 const config: Config = {
   content: [
@@ -15,7 +18,6 @@ const config: Config = {
     "./lib/**/*.{ts,tsx}",
   ],
   theme: {
-    // Editorial, generous container.
     container: {
       center: true,
       padding: {
@@ -34,6 +36,10 @@ const config: Config = {
           deep: "#6E1111",
           soft: "#A93B3B",
         },
+        velluto: {
+          DEFAULT: "#310C11",
+          deep: "#1E0709",
+        },
         ink: {
           DEFAULT: "#14110F",
           soft: "#3A332E",
@@ -49,24 +55,41 @@ const config: Config = {
         clay: "#8C7E6A",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-fraunces)", "ui-serif", "Georgia", "serif"],
+        sans: [
+          "var(--font-haas)",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "ui-sans-serif",
+          "sans-serif",
+        ],
+        display: [
+          "var(--font-haas)",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "ui-sans-serif",
+          "sans-serif",
+        ],
       },
       letterSpacing: {
         label: "0.22em",
         tightest: "-0.03em",
       },
       fontSize: {
-        // Fluid editorial display sizes.
-        "display-sm": ["clamp(2.25rem, 5vw, 3.5rem)", { lineHeight: "1.02", letterSpacing: "-0.02em" }],
-        "display": ["clamp(3rem, 8vw, 6rem)", { lineHeight: "0.98", letterSpacing: "-0.025em" }],
-        "display-lg": ["clamp(3.5rem, 12vw, 9rem)", { lineHeight: "0.92", letterSpacing: "-0.03em" }],
+        // Fluid display scale — architectural at the top, editorial below.
+        "display-2xl": ["clamp(4.25rem, 16vw, 15rem)", { lineHeight: "0.85", letterSpacing: "-0.04em" }],
+        "display-xl": ["clamp(3.25rem, 10vw, 9.5rem)", { lineHeight: "0.9", letterSpacing: "-0.035em" }],
+        "display-lg": ["clamp(2.5rem, 6.8vw, 6rem)", { lineHeight: "0.95", letterSpacing: "-0.025em" }],
+        "display-sm": ["clamp(1.9rem, 4vw, 3.25rem)", { lineHeight: "1.04", letterSpacing: "-0.015em" }],
+        lead: ["clamp(1.2rem, 2vw, 1.6rem)", { lineHeight: "1.35" }],
       },
       maxWidth: {
         prose: "62ch",
       },
       transitionTimingFunction: {
         editorial: "cubic-bezier(0.16, 1, 0.3, 1)",
+        curtain: "cubic-bezier(0.76, 0, 0.24, 1)",
       },
       keyframes: {
         marquee: {
@@ -76,10 +99,6 @@ const config: Config = {
         "fade-up": {
           from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "translateY(0)" },
-        },
-        grain: {
-          "0%, 100%": { transform: "translate(0, 0)" },
-          "50%": { transform: "translate(-2%, 1%)" },
         },
       },
       animation: {

@@ -1,19 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { site } from "@/lib/site";
-import { Logo } from "@/components/ui/Logo";
 import { clsx } from "@/lib/clsx";
+import type { Dictionary } from "@/lib/i18n";
+import { ChameleonMark } from "@/components/ui/ChameleonMark";
+import { TransitionLink } from "@/components/ui/TransitionLink";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+
+interface NavbarProps {
+  nav: Dictionary["nav"];
+  lang: Dictionary["lang"];
+}
 
 /**
- * Fixed header. Transparent and light while it overlays the dark hero, then
- * settles onto a frosted paper bar once the user scrolls. Mobile navigation is
- * a full-screen editorial overlay.
+ * Fixed header that adapts to whatever section is underneath: text and the
+ * chameleon mark inherit the morphing --fg. Mobile navigation is a full-screen
+ * velvet overlay. The IT/EN switch lives here, integrated, not bolted on.
  */
-export function Navbar() {
+export function Navbar({ nav, lang }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const items = [
+    { label: nav.manifesto, href: "/manifesto" },
+    { label: nav.collezione, href: "/collezione" },
+  ];
+  // Strip the locale prefix to detect the active route.
+  const path = pathname.replace(/^\/(it|en)/, "").replace(/\/$/, "") || "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -22,7 +39,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock the page while the mobile menu is open.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -30,77 +50,85 @@ export function Navbar() {
     };
   }, [open]);
 
-  const solid = scrolled || open;
-
   return (
     <>
       <header
         className={clsx(
-          "fixed inset-x-0 top-0 z-50 transition-colors duration-500 ease-editorial",
-          solid
-            ? "border-b border-ink/10 bg-paper/80 text-ink backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent text-ink",
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500 ease-editorial",
+          scrolled && !open && "backdrop-blur-md",
+          open && "text-paper",
         )}
+        style={
+          scrolled && !open
+            ? { backgroundColor: "color-mix(in oklab, var(--bg) 72%, transparent)" }
+            : undefined
+        }
       >
-      <nav className="container flex h-16 items-center justify-between md:h-20">
-        <a
-          href="#top"
-          aria-label="Paca's Lab — home"
-          onClick={() => setOpen(false)}
-          className="group relative z-50 flex items-center gap-2.5"
-        >
-          <Logo
-            mark="chameleon"
-            variant="bordeaux"
-            priority
-            className="h-[24px] w-auto transition-transform duration-500 ease-editorial group-hover:-rotate-[7deg] md:h-7"
-          />
-          <Logo
-            mark="wordmark"
-            variant="black"
-            priority
-            className="h-3 w-auto translate-y-px transition-opacity duration-300 group-hover:opacity-60 md:h-[14px]"
-          />
-        </a>
+        <nav className="container flex h-16 items-center justify-between md:h-20">
+          <TransitionLink
+            href="/"
+            aria-label="Paca's Lab — home"
+            className="group relative z-50 flex items-center gap-3"
+          >
+            <ChameleonMark
+              title="Camaleonte — Paca's Lab"
+              className="h-6 w-auto transition-transform duration-500 ease-editorial group-hover:-rotate-[8deg] md:h-7"
+            />
+            <span className="translate-y-px text-[0.95rem] font-black uppercase leading-none tracking-[0.02em]">
+              {site.wordmark}
+            </span>
+          </TransitionLink>
 
-        {/* Desktop navigation */}
-        <ul className="hidden items-center gap-10 md:flex">
-          {site.nav.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className="link-underline text-[0.8rem] uppercase tracking-[0.14em] text-ink/75 transition-colors duration-300 ease-editorial hover:text-bordeaux"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+          {/* Desktop navigation */}
+          <div className="hidden items-center gap-10 md:flex">
+            <ul className="flex items-center gap-10">
+              {items.map((item) => {
+                const active = path === item.href;
+                return (
+                  <li key={item.href}>
+                    <TransitionLink
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={clsx(
+                        "text-[0.76rem] font-medium uppercase tracking-[0.18em] transition-opacity duration-300",
+                        active
+                          ? "border-b border-current pb-1 opacity-100"
+                          : "link-underline opacity-70 hover:opacity-100",
+                      )}
+                    >
+                      {item.label}
+                    </TransitionLink>
+                  </li>
+                );
+              })}
+            </ul>
+            <span aria-hidden className="h-4 w-px bg-current opacity-20" />
+            <LanguageSwitcher labels={lang} />
+          </div>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          aria-label={open ? "Chiudi menu" : "Apri menu"}
-          aria-expanded={open}
-          className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[5px] md:hidden"
-        >
-          <motion.span
-            animate={open ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="block h-px w-6 bg-current"
-          />
-          <motion.span
-            animate={open ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="block h-px w-6 bg-current"
-          />
-        </button>
-      </nav>
+          {/* Mobile toggle */}
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? nav.close : nav.menu}
+            aria-expanded={open}
+            className="relative z-50 -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[5px] md:hidden"
+          >
+            <motion.span
+              animate={open ? { rotate: 45, y: 3 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="block h-px w-6 bg-current"
+            />
+            <motion.span
+              animate={open ? { rotate: -45, y: -3 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="block h-px w-6 bg-current"
+            />
+          </button>
+        </nav>
       </header>
 
-      {/* Mobile overlay — rendered as a sibling of <header> so the header's
-          backdrop-filter doesn't trap this fixed overlay in an ~80px box. */}
+      {/* Mobile overlay — the velvet room. */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -108,38 +136,50 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-paper text-ink md:hidden"
+            className="grain fixed inset-0 z-40 bg-velluto text-paper md:hidden"
           >
-            <ul className="container flex h-full flex-col justify-center gap-2">
-              {site.nav.map((item, i) => (
-                <motion.li
-                  key={item.href}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="block font-display text-5xl font-light tracking-tightest"
+            <ChameleonMark className="pointer-events-none absolute -bottom-10 -right-12 w-[70%] text-paper opacity-[0.05]" />
+            <div className="container relative z-10 flex h-full flex-col justify-center">
+              <ul className="flex flex-col gap-3">
+                {[{ label: nav.home, href: "/" }, ...items].map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    initial={{ opacity: 0, y: 28 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12 + i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex items-baseline gap-4"
                   >
-                    {item.label}
-                  </a>
-                </motion.li>
-              ))}
-              <motion.li
+                    <span className="tnum text-xs font-medium text-bordeaux-soft">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <TransitionLink
+                      href={item.href}
+                      className={clsx(
+                        "block text-5xl font-thin tracking-tightest",
+                        path === item.href && "italic opacity-60",
+                      )}
+                    >
+                      {item.label}
+                    </TransitionLink>
+                  </motion.li>
+                ))}
+              </ul>
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="mt-10 flex gap-6 text-sm text-clay"
+                transition={{ delay: 0.45, duration: 0.6 }}
+                className="mt-12 flex items-center justify-between"
               >
-                {site.social.map((s) => (
-                  <a key={s.href} href={s.href} target="_blank" rel="noreferrer" className="link-underline">
-                    {s.label}
-                  </a>
-                ))}
-              </motion.li>
-            </ul>
+                <div className="flex gap-6 text-sm text-paper/60">
+                  {site.social.map((s) => (
+                    <a key={s.href} href={s.href} target="_blank" rel="noreferrer" className="link-underline">
+                      {s.label}
+                    </a>
+                  ))}
+                </div>
+                <LanguageSwitcher labels={lang} className="text-paper" />
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

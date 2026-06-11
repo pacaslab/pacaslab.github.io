@@ -26,9 +26,8 @@ export const site: SiteConfig = {
   url: "https://pacaslab.github.io",
   locale: "it_IT",
   nav: [
-    { label: "Manifesto", href: "#manifesto" },
-    { label: "Collezione", href: "#collezione" },
-    { label: "Contatti", href: "#contatti" },
+    { label: "Manifesto", href: "/manifesto" },
+    { label: "Collezione", href: "/collezione" },
   ],
   social: [
     { label: "Instagram", handle: "@pacas_lab", href: "https://www.instagram.com/pacas_lab?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },

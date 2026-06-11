@@ -1,182 +1,164 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { Logo } from "@/components/ui/Logo";
-import { site } from "@/lib/site";
-import type { Tilt } from "./Chameleon";
-
-// three.js stays out of the server bundle and off the critical path.
-const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import type { Dictionary } from "@/lib/i18n";
+import { Ambient } from "@/components/providers/Ambient";
+import { Lines } from "@/components/ui/Lines";
+import { Magnetic } from "@/components/ui/Magnetic";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-function useIsMobile() {
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const on = () => setMobile(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return mobile;
-}
-
-function hasWebGL() {
-  try {
-    const c = document.createElement("canvas");
-    return !!(
-      window.WebGLRenderingContext &&
-      (c.getContext("webgl") || c.getContext("experimental-webgl"))
-    );
-  } catch {
-    return false;
-  }
-}
-
 /**
- * Hero — warm paper background, in two stacked bands:
- *   · upper band  → the floating bordeaux 3D chameleon (reacts to pointer / gyro)
- *   · lower band  → the PACA'S wordmark + statement + CTA, on clean paper background
- * Keeping them apart guarantees the bordeaux wordmark always sits on paper
- * (never on the red of the chameleon), so it stays the legible focal point.
+ * Full-screen campaign hero. The backstage video (velvet curtains, 9:16) runs
+ * as a silent loop under a velvet grade + film grain — the "premium GIF".
+ * Type drifts a few px after the cursor; scrolling away scales the footage and
+ * fades the copy for a cinematic exit.
  */
-export function Hero() {
+export function Hero({ dict }: { dict: Dictionary["hero"] }) {
+  const frameRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const isMobile = useIsMobile();
-  const tilt = useRef<Tilt>({ x: 0, y: 0 });
 
-  // 'pending' until WebGL is probed on the client — avoids a fallback flash.
-  const [mode, setMode] = useState<"pending" | "3d" | "static">("pending");
+  const { scrollYProgress } = useScroll({
+    target: frameRef,
+    offset: ["start start", "end start"],
+  });
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.16]);
+  const videoY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
 
-  useEffect(() => {
-    setMode(!reduce && hasWebGL() ? "3d" : "static");
-  }, [reduce]);
-
-  // Feed pointer + device orientation into the tilt ref (no re-renders).
-  useEffect(() => {
-    if (mode !== "3d") return;
-
-    const onPointer = (e: PointerEvent) => {
-      tilt.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      tilt.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
-    };
-    const onOrient = (e: DeviceOrientationEvent) => {
-      if (e.gamma == null || e.beta == null) return;
-      tilt.current.x = Math.max(-1, Math.min(1, e.gamma / 28));
-      tilt.current.y = Math.max(-1, Math.min(1, (e.beta - 48) / 28));
-    };
-    // iOS only delivers orientation after an explicit grant; ask quietly on
-    // the first touch (inside the gesture) and fall back to touch parallax.
-    const onFirstTouch = () => {
-      const DOE = window.DeviceOrientationEvent as unknown as {
-        requestPermission?: () => Promise<string>;
-      };
-      if (DOE && typeof DOE.requestPermission === "function") {
-        DOE.requestPermission()
-          .then((r) => {
-            if (r === "granted") window.addEventListener("deviceorientation", onOrient);
-          })
-          .catch(() => { });
-      }
-      window.removeEventListener("touchstart", onFirstTouch);
-    };
-
-    window.addEventListener("pointermove", onPointer, { passive: true });
-    window.addEventListener("deviceorientation", onOrient);
-    window.addEventListener("touchstart", onFirstTouch, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onPointer);
-      window.removeEventListener("deviceorientation", onOrient);
-      window.removeEventListener("touchstart", onFirstTouch);
-    };
-  }, [mode]);
-
-  const container: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
-  };
-  const item: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.95, ease: EASE } },
-  };
+  const mx = useSpring(0, { stiffness: 50, damping: 16 });
+  const my = useSpring(0, { stiffness: 50, damping: 16 });
 
   return (
-    <section className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden bg-paper text-ink">
-      {/* Soft bordeaux gradient — depth without breaking the paper minimalism */}
+    <Ambient theme="velluto" as="section" aria-label={`${dict.line1} ${dict.line2}`}>
       <div
-        aria-hidden
-        className="absolute inset-0 [background:radial-gradient(54%_42%_at_50%_34%,rgba(144,24,24,0.10),transparent_72%)]"
-      />
+        ref={frameRef}
+        onPointerMove={(event) => {
+          if (reduce || event.pointerType !== "mouse") return;
+          const { innerWidth, innerHeight } = window;
+          mx.set((event.clientX / innerWidth - 0.5) * 16);
+          my.set((event.clientY / innerHeight - 0.5) * 10);
+        }}
+        onPointerLeave={() => {
+          mx.set(0);
+          my.set(0);
+        }}
+        className="grain relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-velluto text-paper"
+      >
+        <motion.div
+          initial={reduce ? false : { scale: 1.08, opacity: 0.4 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.7, ease: EASE }}
+          className="absolute inset-0 overflow-hidden"
+        >
+          <motion.div style={reduce ? undefined : { scale: videoScale, y: videoY }} className="h-full w-full">
+            {reduce ? (
+              <img src="/assets/video/hero-poster.webp" alt="" aria-hidden className="h-full w-full object-cover" />
+            ) : (
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                poster="/assets/video/hero-poster.webp"
+                aria-hidden
+              >
+                <source src="/assets/video/hero.mp4" type="video/mp4" />
+              </video>
+            )}
+          </motion.div>
+        </motion.div>
 
-      {/* Upper band — the 3D chameleon lives only here */}
-      <div className="relative flex-1">
-        {/* Faint grounding shadow under the float */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/85 via-velluto/25 to-velluto-deep/60" />
         <div
           aria-hidden
-          className="absolute left-1/2 top-[62%] h-16 w-[38%] max-w-md -translate-x-1/2 rounded-[50%] bg-bordeaux/10 blur-3xl"
+          className="absolute inset-0 [background:radial-gradient(110%_85%_at_50%_42%,transparent_42%,rgba(30,7,9,0.55)_100%)]"
         />
 
-        {mode === "3d" && (
-          <div aria-hidden className="pointer-events-none absolute inset-0">
-            <HeroCanvas tilt={tilt} isMobile={isMobile} />
-          </div>
-        )}
-        {mode === "static" && (
-          <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <Logo mark="chameleon" variant="bordeaux" priority className="w-[min(54vw,300px)]" />
-          </div>
-        )}
-      </div>
+        <motion.div
+          style={reduce ? undefined : { opacity: contentOpacity, y: contentY }}
+          className="container relative z-10 pb-24 md:pb-28"
+        >
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
+            className="label text-paper/70"
+          >
+            {dict.eyebrow}
+          </motion.p>
 
-      {/* Lower band — wordmark + statement + CTA, always on clean paper */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 flex flex-col items-center px-6 pb-[8vh] text-center"
-      >
-        <motion.p variants={item} className="label mb-6 text-clay">
-          {site.tagline}
-        </motion.p>
+          <motion.div style={reduce ? undefined : { x: mx, y: my }}>
+            <Lines
+              as="h1"
+              immediate
+              delay={0.55}
+              stagger={0.13}
+              className="mt-6 text-display-xl font-black uppercase"
+              lines={[
+                dict.line1,
+                <span key="adapt">
+                  {dict.line2}
+                  <span className="text-bordeaux-soft">.</span>
+                </span>,
+              ]}
+            />
+          </motion.div>
 
-        <motion.div variants={item} className="flex flex-col items-center">
-          <Logo
-            mark="wordmark"
-            variant="bordeaux"
-            priority
-            className="h-auto w-[min(80vw,540px)]"
-          />
-          <span className="sr-only">{site.name}</span>
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.05, duration: 0.9, ease: EASE }}
+            className="mt-8 max-w-md text-pretty text-base leading-relaxed text-paper/75 md:text-lg"
+          >
+            {dict.lead}
+          </motion.p>
 
-          <p className="mt-7 max-w-md text-balance font-display text-xl italic text-ink-soft md:text-2xl">
-            Costruito per adattarsi.
-          </p>
-          <p className="mt-3 text-[0.7rem] uppercase tracking-label text-clay">
-            Abbigliamento contemporaneo · {site.origin}
-          </p>
-
-          <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row">
-            <a
-              href="#collezione"
-              className="group inline-flex items-center gap-2 rounded-full bg-bordeaux px-8 py-3.5 text-sm font-medium text-paper transition-colors duration-300 ease-editorial hover:bg-bordeaux-deep"
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.25, duration: 0.9, ease: EASE }}
+            className="mt-10 flex flex-wrap items-center gap-6"
+          >
+            <Magnetic>
+              <TransitionLink
+                href="/collezione"
+                className="inline-flex items-center gap-3 rounded-full bg-paper px-8 py-4 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-bordeaux hover:text-paper"
+              >
+                {dict.ctaPrimary}
+              </TransitionLink>
+            </Magnetic>
+            <TransitionLink
+              href="/manifesto"
+              className="link-underline text-[0.78rem] font-medium uppercase tracking-[0.16em] text-paper/80"
             >
-              Scopri la collezione
-              <span className="transition-transform duration-300 ease-editorial group-hover:translate-x-1">
-                →
-              </span>
-            </a>
-            <a
-              href="#manifesto"
-              className="rounded-full border border-ink/20 px-8 py-3.5 text-sm text-ink transition-colors duration-300 ease-editorial hover:border-ink/50"
-            >
-              Il manifesto
-            </a>
-          </div>
+              {dict.ctaSecondary}
+            </TransitionLink>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </section>
+
+        <motion.div
+          aria-hidden
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.8, duration: 1 }}
+          className="absolute bottom-12 right-6 z-10 hidden flex-col items-center gap-3 md:flex lg:right-12"
+        >
+          <span className="rotate-90 text-[0.6rem] uppercase tracking-[0.3em] text-paper/55">{dict.scroll}</span>
+          <span className="relative mt-4 h-12 w-px overflow-hidden bg-paper/20">
+            <motion.span
+              animate={reduce ? undefined : { y: ["-100%", "100%"] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-x-0 h-1/2 bg-paper/80"
+            />
+          </span>
+        </motion.div>
+      </div>
+    </Ambient>
   );
 }

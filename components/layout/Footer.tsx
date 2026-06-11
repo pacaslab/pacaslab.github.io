@@ -1,50 +1,70 @@
 import { site } from "@/lib/site";
-import { Logo } from "@/components/ui/Logo";
+import type { Dictionary } from "@/lib/i18n";
+import { ChameleonMark } from "@/components/ui/ChameleonMark";
+import { Ticker } from "@/components/ui/Ticker";
+import { TransitionLink } from "@/components/ui/TransitionLink";
+
+interface FooterProps {
+  footer: Dictionary["footer"];
+  nav: Dictionary["nav"];
+  common: Dictionary["common"];
+}
 
 /**
- * Ink footer. Brand sign-off, navigation, socials and the legal line.
- * A large, faint chameleon sits behind the content as a watermark.
+ * Ink footer: marquee sign-off, an oversized typographic wordmark and the
+ * essential links. The chameleon closes the page as a faint watermark.
  */
-export function Footer() {
+export function Footer({ footer, nav, common }: FooterProps) {
   const year = new Date().getFullYear();
+  const links = [
+    { label: nav.home, href: "/" },
+    { label: nav.manifesto, href: "/manifesto" },
+    { label: nav.collezione, href: "/collezione" },
+  ];
 
   return (
     <footer id="contatti" className="relative overflow-hidden bg-ink text-paper">
-      {/* Watermark */}
-      <Logo
-        mark="chameleon"
-        variant="white"
-        decorative
-        className="pointer-events-none absolute -bottom-16 -right-10 w-[42%] max-w-2xl opacity-[0.04]"
+      <ChameleonMark className="pointer-events-none absolute -bottom-14 -right-10 w-[44%] max-w-2xl text-paper opacity-[0.04]" />
+
+      <Ticker
+        items={[common.builtToAdapt, common.madeInItaly, site.name, common.builtToAdaptIt]}
+        speed="slow"
+        className="border-b border-paper/10 py-5 text-paper/80"
       />
 
       <div className="container relative">
-        {/* Statement */}
-        <div className="grid gap-12 border-b border-paper/10 py-20 md:grid-cols-12 md:py-28">
+        <div className="grid gap-14 border-b border-paper/10 py-16 md:grid-cols-12 md:py-24">
           <div className="md:col-span-7">
-            <p className="label text-clay">{site.tagline} — {site.origin}</p>
-            <h2 className="mt-6 max-w-xl text-balance font-display text-4xl font-light leading-[1.05] tracking-tightest md:text-6xl">
-              Capi essenziali,<br />
-              <span className="italic text-paper/70">costruiti per adattarsi.</span>
-            </h2>
+            <p className="label">{footer.stayInTouch}</p>
+            <a
+              href={site.social[0].href}
+              target="_blank"
+              rel="noreferrer"
+              className="link-underline mt-6 inline-block text-display-sm font-thin tracking-tightest"
+            >
+              {footer.instaCta}&nbsp;&#8599;
+            </a>
+            <p className="mt-6 max-w-prose text-sm leading-relaxed text-paper/55">
+              {footer.blurb} {common.madeInItaly}.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:col-span-5 md:grid-cols-2">
-            <nav aria-label="Footer">
-              <p className="label text-clay">Esplora</p>
+          <div className="grid grid-cols-2 gap-8 md:col-span-5">
+            <nav aria-label={footer.explore}>
+              <p className="label">{footer.explore}</p>
               <ul className="mt-5 space-y-3 text-sm">
-                {site.nav.map((item) => (
+                {links.map((item) => (
                   <li key={item.href}>
-                    <a href={item.href} className="link-underline text-paper/80 hover:text-paper">
+                    <TransitionLink href={item.href} className="link-underline text-paper/80 hover:text-paper">
                       {item.label}
-                    </a>
+                    </TransitionLink>
                   </li>
                 ))}
               </ul>
             </nav>
 
             <div>
-              <p className="label text-clay">Social</p>
+              <p className="label">{footer.social}</p>
               <ul className="mt-5 space-y-3 text-sm">
                 {site.social.map((s) => (
                   <li key={s.href}>
@@ -55,25 +75,34 @@ export function Footer() {
                       className="link-underline text-paper/80 hover:text-paper"
                     >
                       {s.label}
+                      <span className="ml-1 text-paper/40">{s.handle}</span>
                     </a>
                   </li>
                 ))}
-
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Legal bar */}
-        <div className="flex flex-col items-start justify-between gap-6 py-8 md:flex-row md:items-center">
-          <Logo mark="wordmark" variant="white" className="h-3.5 w-auto opacity-90" />
-          <div className="flex flex-col gap-1 text-xs text-clay md:flex-row md:items-center md:gap-6">
-            <span>© {year} {site.name}. Tutti i diritti riservati.</span>
-            <span className="hidden md:inline" aria-hidden>·</span>
-            <span>{site.origin}</span>
-          </div>
-          <a href="#top" className="link-underline text-xs uppercase tracking-[0.14em] text-paper/70">
-            Torna su ↑
+        {/* Oversized wordmark — the typographic sign-off. */}
+        <div className="flex items-end justify-between gap-6 pt-10">
+          <p
+            aria-hidden
+            className="select-none text-display-2xl font-black uppercase leading-[0.78] tracking-[-0.04em] text-paper/95"
+          >
+            {site.wordmark}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-4 py-8 md:flex-row md:items-center">
+          <span className="text-xs text-paper/45">
+            © {year} {site.name}. {footer.rights}
+          </span>
+          <span className="text-xs text-paper/45">
+            {common.builtToAdapt} — {common.madeInItaly}
+          </span>
+          <a href="#contenuto" className="link-underline text-xs uppercase tracking-[0.14em] text-paper/70">
+            {footer.backToTop}&nbsp;&#8593;
           </a>
         </div>
       </div>
