@@ -20,7 +20,7 @@ export const it = {
     collezione: {
       title: "Collezione",
       description:
-        "Capsule 01 di Paca's Lab: quattro capi essenziali Made in Italy. Maglie oversize, bucket hat e tote bag con la firma del camaleonte.",
+        "Capsule 01 di Paca's Lab: quattro capi essenziali Made in Italy. Maglie, bucket hat e tote bag con la firma del camaleonte.",
     },
   },
 
@@ -72,8 +72,8 @@ export const it = {
     statement: "Una busta, un gesto, una firma. Tutto ciò che esce dal laboratorio porta con sé la stessa cura: la grammatura piena, la stampa netta, la mano italiana.",
     tag: "Packaging Capsule 01",
     specs: [
-      { k: "Materia", v: "Cotone pettinato" },
-      { k: "Grammatura", v: "240 g/m²" },
+      { k: "Materia", v: "Cotone pettinato e organico" },
+      { k: "Grammatura", v: "180 g/m²" },
       { k: "Origine", v: "Made in Italy" },
     ],
   },
@@ -127,7 +127,7 @@ export const it = {
       },
       {
         q: "Dove e come vengono realizzati i capi?",
-        a: "L'intera filiera produttiva è dislocata in Italia. Collaboriamo con piccoli laboratori artigianali selezionati per garantire cuciture rinforzate, stampe serigrafiche resistenti e tessuti di cotone pettinato da 240g/m².",
+        a: "L'intera filiera produttiva è dislocata in Italia. Collaboriamo con piccoli laboratori artigianali selezionati per garantire cuciture rinforzate, stampe serigrafiche resistenti e tessuti di cotone pettinato e organico tra 180 e 210 g/m².",
       },
       {
         q: "Come dovrei prendermi cura dei capi?",
@@ -275,19 +275,19 @@ export const it = {
       name: "Maglia Camaleonte",
       colorway: "Avorio",
       tagline: "Stampa sul retro, firma sul cuore.",
-      description: "Taglio oversize dal peso pieno. Il camaleonte bordeaux campeggia sul retro; sul fronte, soltanto la firma. Un capo che cambia con chi lo indossa.",
-      alt: "Maglia oversize avorio Paca's Lab, fronte con firma e retro con la stampa del camaleonte bordeaux.",
-      materials: ["100% cotone pettinato", "Jersey pesante · 240 g/m²", "Vestibilità oversize"],
+      description: "Taglio boxy in cotone di grammatura piena. Il camaleonte bordeaux campeggia sul retro; sul fronte, soltanto la firma. Un capo che cambia con chi lo indossa.",
+      alt: "Maglia boxy avorio Paca's Lab, fronte con firma e retro con la stampa del camaleonte bordeaux.",
+      materials: ["100% cotone pettinato ring-spun", "210 g/m²", "Vestibilità boxy"],
       details: ["Stampa serigrafica", "Etichetta interna “Built to adapt”", "Made in Italy"],
       cropLabels: ["La firma sul cuore", "Il camaleonte sul retro"],
-      fit: "Oversize dichiarata: spalla scesa, corpo ampio, orlo dritto. Per un fit più asciutto scendi di una taglia.",
+      fit: "Boxy per scelta: spalla scesa, cuciture laterali, maniche corte, orlo dritto. Per una linea più asciutta scendi di una taglia.",
       styling: [
         "Con denim grezzo e sneaker minimali: la stampa parla da sola.",
         "Sotto una overshirt aperta, il camaleonte si intravede quando ti muovi.",
         "D'estate da sola, d'inverno come strato: nasce per cambiare ruolo.",
       ],
       sizeColumns: ["Taglia", "Petto (cm)", "Lunghezza (cm)"],
-      sizeRows: [["S", "58", "70"], ["M", "61", "72"], ["L", "64", "74"], ["XL", "67", "76"]],
+      sizeRows: [["XS", "57", "71,5"], ["S", "59,6", "73,5"], ["M", "62,2", "75,5"], ["L", "64,8", "77,5"], ["XL", "68,4", "79,5"]],
       sizeNote: "Misure prese a capo disteso. Nel video della campagna la modella indossa una M.",
     },
     "maglia-firma": {
@@ -295,18 +295,18 @@ export const it = {
       colorway: "Nero",
       tagline: "Nero su nero. Il dettaglio si svela da vicino.",
       description: "La versione essenziale: total black, camaleonte tono su tono sul cuore. Pensata per sparire e adattarsi a tutto ciò che indossi.",
-      alt: "Maglia oversize nera Paca's Lab, fronte e retro su fondo scuro con piccolo camaleonte tono su tono.",
-      materials: ["100% cotone pettinato", "Jersey pesante · 240 g/m²", "Tinto in capo"],
-      details: ["Mark ricamato tono su tono", "Vestibilità oversize", "Made in Italy"],
+      alt: "Maglia nera regular Paca's Lab, fronte e retro su fondo scuro con piccolo camaleonte tono su tono.",
+      materials: ["100% cotone organico", "180 g/m²", "Vestibilità regular"],
+      details: ["Mark ricamato tono su tono", "Maniche corte", "Made in Italy"],
       cropLabels: ["Camaleonte tono su tono", "Jersey tinto in capo"],
-      fit: "Stessa base oversize della Camaleonte: spalla scesa, corpo dritto. Il total black perdona tutto.",
+      fit: "Vestibilità regular con maniche corte: linea pulita e fedele alla taglia. Il total black perdona tutto.",
       styling: [
         "Nero su nero con cargo o tailoring rilassato.",
         "Il ricamo si nota solo da vicino: lascialo scoprire.",
         "Con il bucket sabbia per spezzare il monocromo.",
       ],
       sizeColumns: ["Taglia", "Petto (cm)", "Lunghezza (cm)"],
-      sizeRows: [["S", "58", "70"], ["M", "61", "72"], ["L", "64", "74"], ["XL", "67", "76"]],
+      sizeRows: [["XS", "49", "69"], ["S", "51", "71"], ["M", "53", "73"], ["L", "55", "75"], ["XL", "57", "77"]],
       sizeNote: "Tinto in capo: alla prima lavata può assestarsi di mezzo centimetro.",
     },
     "bucket-hat": {

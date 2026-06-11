@@ -16,7 +16,7 @@ export const en: Dictionary = {
     collezione: {
       title: "Collection",
       description:
-        "Paca's Lab Capsule 01: four essential pieces Made in Italy. Oversized tees, bucket hat and tote bag, signed by the chameleon.",
+        "Paca's Lab Capsule 01: four essential pieces Made in Italy. Tees, bucket hat and tote bag, signed by the chameleon.",
     },
   },
 
@@ -68,8 +68,8 @@ export const en: Dictionary = {
     statement: "A package, a gesture, a signature. Everything that leaves the laboratory carries the same care: the full weight, the clean print, the Italian hand.",
     tag: "Capsule 01 packaging",
     specs: [
-      { k: "Matter", v: "Combed cotton" },
-      { k: "Weight", v: "240 g/m²" },
+      { k: "Matter", v: "Combed & organic cotton" },
+      { k: "Weight", v: "180–210 g/m²" },
       { k: "Origin", v: "Made in Italy" },
     ],
   },
@@ -123,7 +123,7 @@ export const en: Dictionary = {
       },
       {
         q: "Where and how are the pieces made?",
-        a: "The entire supply chain sits in Italy. We work with small, selected artisan workshops to guarantee reinforced seams, durable screen prints and combed cotton fabrics at 240 g/m².",
+        a: "The entire supply chain sits in Italy. We work with small, selected artisan workshops to guarantee reinforced seams, durable screen prints and ring-spun combed and organic cotton fabrics between 180 and 210 g/m².",
       },
       {
         q: "How should I care for the pieces?",
@@ -269,19 +269,19 @@ export const en: Dictionary = {
       name: "Chameleon Tee",
       colorway: "Ivory",
       tagline: "Print on the back, signature over the heart.",
-      description: "Oversized cut with a full weight. The bordeaux chameleon sits across the back; on the front, only the signature. A piece that changes with whoever wears it.",
-      alt: "Oversized ivory Paca's Lab tee, signature on the front and the bordeaux chameleon print on the back.",
-      materials: ["100% combed cotton", "Heavy jersey · 240 g/m²", "Oversized fit"],
+      description: "Boxy cut in a full-weight cotton. The bordeaux chameleon sits across the back; on the front, only the signature. A piece that changes with whoever wears it.",
+      alt: "Boxy ivory Paca's Lab tee, signature on the front and the bordeaux chameleon print on the back.",
+      materials: ["100% ring-spun combed cotton", "210 g/m²", "Boxy fit"],
       details: ["Screen print", "Inner “Built to adapt” label", "Made in Italy"],
       cropLabels: ["Signature over the heart", "The chameleon on the back"],
-      fit: "Deliberately oversized: dropped shoulder, roomy body, straight hem. For a leaner fit, size down.",
+      fit: "Boxy by design: dropped shoulder, side seams, short sleeves, straight hem. For a leaner line, size down.",
       styling: [
         "With raw denim and minimal sneakers: the print speaks for itself.",
         "Under an open overshirt, the chameleon shows as you move.",
         "On its own in summer, layered in winter: built to change roles.",
       ],
       sizeColumns: ["Size", "Chest (cm)", "Length (cm)"],
-      sizeRows: [["S", "58", "70"], ["M", "61", "72"], ["L", "64", "74"], ["XL", "67", "76"]],
+      sizeRows: [["XS", "57", "71.5"], ["S", "59.6", "73.5"], ["M", "62.2", "75.5"], ["L", "64.8", "77.5"], ["XL", "68.4", "79.5"]],
       sizeNote: "Measured flat. In the campaign film the model wears an M.",
     },
     "maglia-firma": {
@@ -289,18 +289,18 @@ export const en: Dictionary = {
       colorway: "Black",
       tagline: "Black on black. The detail reveals itself up close.",
       description: "The essential version: total black, tone-on-tone chameleon over the heart. Made to disappear and adapt to everything you wear.",
-      alt: "Oversized black Paca's Lab tee, front and back on a dark ground with a small tone-on-tone chameleon.",
-      materials: ["100% combed cotton", "Heavy jersey · 240 g/m²", "Garment dyed"],
-      details: ["Tone-on-tone embroidered mark", "Oversized fit", "Made in Italy"],
+      alt: "Regular-fit black Paca's Lab tee, front and back on a dark ground with a small tone-on-tone chameleon.",
+      materials: ["100% organic cotton", "180 g/m²", "Regular fit"],
+      details: ["Tone-on-tone embroidered mark", "Short sleeves", "Made in Italy"],
       cropLabels: ["Tone-on-tone chameleon", "Garment-dyed jersey"],
-      fit: "Same oversized base as the Chameleon: dropped shoulder, straight body. Total black forgives everything.",
+      fit: "Regular fit with short sleeves: a clean, true-to-size line. Total black forgives everything.",
       styling: [
         "Black on black with cargos or relaxed tailoring.",
         "The embroidery only shows up close: let it be discovered.",
         "With the sand bucket hat to break the monochrome.",
       ],
       sizeColumns: ["Size", "Chest (cm)", "Length (cm)"],
-      sizeRows: [["S", "58", "70"], ["M", "61", "72"], ["L", "64", "74"], ["XL", "67", "76"]],
+      sizeRows: [["XS", "49", "69"], ["S", "51", "71"], ["M", "53", "73"], ["L", "55", "75"], ["XL", "57", "77"]],
       sizeNote: "Garment dyed: it may settle by half a centimetre on the first wash.",
     },
     "bucket-hat": {
