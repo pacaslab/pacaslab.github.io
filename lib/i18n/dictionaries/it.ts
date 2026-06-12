@@ -22,6 +22,16 @@ export const it = {
       description:
         "Capsule 01 di Paca's Lab: quattro capi essenziali Made in Italy. Maglie, bucket hat e tote bag con la firma del camaleonte.",
     },
+    privacy: {
+      title: "Privacy",
+      description:
+        "Informativa privacy di Paca's Lab: quali dati tratta questo sito vetrina, perché e quali diritti hai ai sensi del GDPR.",
+    },
+    cookie: {
+      title: "Cookie",
+      description:
+        "Cookie policy di Paca's Lab: questo sito non usa cookie di profilazione né strumenti di tracciamento.",
+    },
   },
 
   nav: {
@@ -144,6 +154,9 @@ export const it = {
     social: "Social",
     rights: "Tutti i diritti riservati.",
     backToTop: "Torna su",
+    legal: "Note legali",
+    privacy: "Privacy",
+    cookie: "Cookie",
   },
 
   manifesto: {
@@ -260,6 +273,126 @@ export const it = {
     fit: "Vestibilità",
     styling: "Come portarla",
     next: "Capo successivo",
+  },
+
+  legal: {
+    controllerLabel: "Titolare del trattamento",
+    contactLabel: "Contatti",
+    vatLabel: "P. IVA",
+    updatedLabel: "Ultimo aggiornamento",
+    backHome: "Torna alla home",
+    privacy: {
+      eyebrow: "Informativa — Art. 13 GDPR",
+      title: "Privacy.",
+      intro:
+        "Questo sito è una vetrina: non vende online, non ti profila, non ti traccia. Qui, in chiaro, quali dati tratta quando lo visiti e quali diritti hai.",
+      sections: [
+        {
+          n: "01",
+          title: "Quali dati trattiamo",
+          body: [
+            "Quando navighi raccogliamo solo i dati tecnici che ogni server riceve: indirizzo IP, tipo di browser e dispositivo, data e ora della visita, pagine viste. Vengono registrati automaticamente nei log del nostro fornitore di hosting.",
+            "Non chiediamo né raccogliamo nome, email o dati di pagamento: non esiste registrazione, carrello o checkout. Se ci scrivi su Instagram sei tu a inviarci spontaneamente i tuoi dati; vediamo solo il contenuto del messaggio che scegli di mandarci.",
+          ],
+        },
+        {
+          n: "02",
+          title: "Perché li trattiamo e con quale base giuridica",
+          body: [
+            "Usiamo i dati tecnici solo per erogare il sito, garantirne la sicurezza e prevenire abusi. La base giuridica è il legittimo interesse del Titolare (art. 6, par. 1, lett. f del GDPR) a far funzionare il sito in modo sicuro.",
+            "Non usiamo i tuoi dati per profilazione, pubblicità o decisioni automatizzate.",
+          ],
+        },
+        {
+          n: "03",
+          title: "Hosting e trasferimenti extra-UE",
+          body: [
+            "Il sito è ospitato su GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA, USA), che agisce come responsabile del trattamento e conserva i log tecnici per garantire sicurezza e disponibilità.",
+            "Il trasferimento dei dati verso gli Stati Uniti è disciplinato dalle Clausole Contrattuali Standard della Commissione Europea e dall'adesione di GitHub al EU–U.S. Data Privacy Framework.",
+          ],
+        },
+        {
+          n: "04",
+          title: "Cookie",
+          body: [
+            "Questo sito non installa cookie di profilazione né strumenti di analisi o tracciamento. Per il dettaglio vedi la Cookie Policy.",
+          ],
+        },
+        {
+          n: "05",
+          title: "Link e servizi esterni",
+          body: [
+            "Il sito rimanda a profili esterni come Instagram e TikTok. Cliccando lasci il nostro sito ed entri in piattaforme che trattano i tuoi dati secondo le loro informative: non controlliamo e non siamo responsabili di tali trattamenti.",
+          ],
+        },
+        {
+          n: "06",
+          title: "Per quanto tempo",
+          body: [
+            "I log tecnici sono conservati dal fornitore di hosting per il tempo necessario alla sicurezza, poi cancellati o resi anonimi. I messaggi che ci invii restano nella tua cronologia Instagram finché non li elimini.",
+          ],
+        },
+      ],
+      rights: {
+        title: "I tuoi diritti",
+        intro:
+          "In qualsiasi momento puoi esercitare i diritti previsti dagli articoli 15–22 del GDPR scrivendo ai contatti del Titolare indicati sopra:",
+        items: [
+          { label: "Accesso", desc: "sapere quali dati trattiamo e ottenerne copia." },
+          { label: "Rettifica", desc: "correggere dati inesatti o incompleti." },
+          { label: "Cancellazione", desc: "chiedere la rimozione dei tuoi dati («diritto all'oblio»)." },
+          { label: "Limitazione", desc: "chiedere di sospendere il trattamento in determinati casi." },
+          { label: "Opposizione", desc: "opporti al trattamento fondato sul legittimo interesse." },
+          { label: "Portabilità", desc: "ricevere i tuoi dati in un formato strutturato e leggibile." },
+        ],
+        complaint:
+          "Hai inoltre diritto di proporre reclamo all'Autorità Garante per la protezione dei dati personali (garanteprivacy.it).",
+      },
+    },
+    cookie: {
+      eyebrow: "Informativa cookie",
+      title: "Cookie.",
+      intro:
+        "Versione breve: questo sito non ti traccia. Nessun cookie di profilazione, nessun pixel, nessuno strumento di analisi.",
+      sections: [
+        {
+          n: "01",
+          title: "Cosa sono i cookie",
+          body: [
+            "I cookie sono piccoli file che un sito salva nel tuo browser per ricordare alcune informazioni. Si distinguono in cookie tecnici, necessari al funzionamento, e cookie di profilazione, usati per tracciare la navigazione e mostrare pubblicità.",
+          ],
+        },
+        {
+          n: "02",
+          title: "I cookie di questo sito",
+          body: [
+            "Non utilizziamo cookie di profilazione né strumenti di analisi, statistica o marketing. Non c'è Google Analytics, non ci sono pixel dei social network, non condividiamo dati con terzi per fini pubblicitari.",
+            "Per questo non vedi alcun banner di consenso: secondo le Linee guida del Garante del 10 giugno 2021, il banner è richiesto solo in presenza di cookie non tecnici.",
+          ],
+        },
+        {
+          n: "03",
+          title: "Cookie tecnici dell'hosting",
+          body: [
+            "Il fornitore di hosting (GitHub Pages) può impostare cookie strettamente tecnici, necessari a erogare le pagine e a garantirne la sicurezza. Non servono a profilarti e, per legge, non richiedono consenso.",
+          ],
+        },
+        {
+          n: "04",
+          title: "Servizi esterni",
+          body: [
+            "Se clicchi i link verso Instagram o TikTok, queste piattaforme possono installare propri cookie secondo le loro policy, una volta che hai lasciato il nostro sito.",
+          ],
+        },
+        {
+          n: "05",
+          title: "Come gestire i cookie",
+          body: [
+            "Puoi bloccare o eliminare i cookie dalle impostazioni del tuo browser (Chrome, Safari, Firefox, Edge). Trattandosi solo di cookie tecnici, disabilitarli non riduce le funzioni di questo sito.",
+          ],
+        },
+      ],
+    },
   },
 
   common: {

@@ -95,9 +95,22 @@ export function Footer({ footer, nav, common }: FooterProps) {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 py-8 md:flex-row md:items-center">
-          <span className="text-xs text-paper/45">
-            © {year} {site.name}. {footer.rights}
-          </span>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <span className="text-xs text-paper/45">
+              © {year} {site.name}. {footer.rights}
+            </span>
+            <nav
+              aria-label={footer.legal}
+              className="flex items-center gap-5 text-xs uppercase tracking-[0.12em] text-paper/55"
+            >
+              <TransitionLink href="/privacy" className="link-underline hover:text-paper">
+                {footer.privacy}
+              </TransitionLink>
+              <TransitionLink href="/cookie" className="link-underline hover:text-paper">
+                {footer.cookie}
+              </TransitionLink>
+            </nav>
+          </div>
           <span className="text-xs text-paper/45">
             {common.builtToAdapt} — {common.madeInItaly}
           </span>

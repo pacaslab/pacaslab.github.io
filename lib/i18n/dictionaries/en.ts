@@ -18,6 +18,16 @@ export const en: Dictionary = {
       description:
         "Paca's Lab Capsule 01: four essential pieces Made in Italy. Tees, bucket hat and tote bag, signed by the chameleon.",
     },
+    privacy: {
+      title: "Privacy",
+      description:
+        "Paca's Lab privacy notice: what data this showcase site processes, why, and the rights you have under the GDPR.",
+    },
+    cookie: {
+      title: "Cookies",
+      description:
+        "Paca's Lab cookie policy: this site uses no profiling cookies and no tracking tools.",
+    },
   },
 
   nav: {
@@ -140,6 +150,9 @@ export const en: Dictionary = {
     social: "Social",
     rights: "All rights reserved.",
     backToTop: "Back to top",
+    legal: "Legal",
+    privacy: "Privacy",
+    cookie: "Cookies",
   },
 
   manifesto: {
@@ -256,6 +269,126 @@ export const en: Dictionary = {
     fit: "Fit",
     styling: "How to wear it",
     next: "Next piece",
+  },
+
+  legal: {
+    controllerLabel: "Data controller",
+    contactLabel: "Contact",
+    vatLabel: "VAT no.",
+    updatedLabel: "Last updated",
+    backHome: "Back to home",
+    privacy: {
+      eyebrow: "Notice — GDPR Art. 13",
+      title: "Privacy.",
+      intro:
+        "This site is a showcase: it doesn't sell online, doesn't profile you, doesn't track you. Here, in plain words, is what data it processes when you visit and what rights you have.",
+      sections: [
+        {
+          n: "01",
+          title: "What data we process",
+          body: [
+            "As you browse we collect only the technical data every server receives: IP address, browser and device type, date and time of the visit, pages viewed. These are logged automatically by our hosting provider.",
+            "We don't ask for or collect a name, email or payment data: there is no sign-up, cart or checkout. If you message us on Instagram you send us your data yourself; we only see the content of the message you choose to send.",
+          ],
+        },
+        {
+          n: "02",
+          title: "Why we process it and on what legal basis",
+          body: [
+            "We use technical data only to deliver the site, keep it secure and prevent abuse. The legal basis is the controller's legitimate interest (Art. 6(1)(f) GDPR) in running the site safely.",
+            "We do not use your data for profiling, advertising or automated decisions.",
+          ],
+        },
+        {
+          n: "03",
+          title: "Hosting and non-EU transfers",
+          body: [
+            "The site is hosted on GitHub Pages (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA, USA), which acts as a data processor and keeps the technical logs to ensure security and availability.",
+            "The transfer of data to the United States is governed by the European Commission's Standard Contractual Clauses and by GitHub's certification under the EU–U.S. Data Privacy Framework.",
+          ],
+        },
+        {
+          n: "04",
+          title: "Cookies",
+          body: [
+            "This site sets no profiling cookies and no analytics or tracking tools. See the Cookie Policy for the details.",
+          ],
+        },
+        {
+          n: "05",
+          title: "External links and services",
+          body: [
+            "The site links to external profiles such as Instagram and TikTok. By clicking you leave our site and enter platforms that process your data under their own notices: we neither control nor are responsible for that processing.",
+          ],
+        },
+        {
+          n: "06",
+          title: "How long we keep it",
+          body: [
+            "Technical logs are kept by the hosting provider for as long as needed for security, then deleted or anonymised. Messages you send us stay in your Instagram history until you delete them.",
+          ],
+        },
+      ],
+      rights: {
+        title: "Your rights",
+        intro:
+          "At any time you can exercise the rights set out in Articles 15–22 of the GDPR by writing to the controller's contact above:",
+        items: [
+          { label: "Access", desc: "know what data we process and get a copy of it." },
+          { label: "Rectification", desc: "correct inaccurate or incomplete data." },
+          { label: "Erasure", desc: "ask for your data to be removed (the “right to be forgotten”)." },
+          { label: "Restriction", desc: "ask us to pause processing in certain cases." },
+          { label: "Objection", desc: "object to processing based on legitimate interest." },
+          { label: "Portability", desc: "receive your data in a structured, readable format." },
+        ],
+        complaint:
+          "You also have the right to lodge a complaint with the Italian Data Protection Authority (garanteprivacy.it).",
+      },
+    },
+    cookie: {
+      eyebrow: "Cookie notice",
+      title: "Cookies.",
+      intro:
+        "Short version: this site doesn't track you. No profiling cookies, no pixels, no analytics.",
+      sections: [
+        {
+          n: "01",
+          title: "What cookies are",
+          body: [
+            "Cookies are small files a site stores in your browser to remember some information. They fall into technical cookies, needed for the site to work, and profiling cookies, used to track browsing and show advertising.",
+          ],
+        },
+        {
+          n: "02",
+          title: "The cookies on this site",
+          body: [
+            "We use no profiling cookies and no analytics, statistics or marketing tools. There is no Google Analytics, no social-network pixels, and we don't share data with third parties for advertising.",
+            "That's why you see no consent banner: under the Italian Garante's guidelines of 10 June 2021, a banner is required only when non-technical cookies are present.",
+          ],
+        },
+        {
+          n: "03",
+          title: "Technical cookies from hosting",
+          body: [
+            "Our hosting provider (GitHub Pages) may set strictly technical cookies, needed to deliver the pages and keep them secure. They don't profile you and, by law, require no consent.",
+          ],
+        },
+        {
+          n: "04",
+          title: "External services",
+          body: [
+            "If you click the links to Instagram or TikTok, those platforms may set their own cookies under their policies, once you've left our site.",
+          ],
+        },
+        {
+          n: "05",
+          title: "How to manage cookies",
+          body: [
+            "You can block or delete cookies from your browser settings (Chrome, Safari, Firefox, Edge). As only technical cookies are involved, disabling them won't reduce this site's features.",
+          ],
+        },
+      ],
+    },
   },
 
   common: {

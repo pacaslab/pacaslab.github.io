@@ -29,6 +29,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.9,
         alternates: { languages: alt("/collezione") },
       },
+      {
+        url: `${base}/privacy`,
+        lastModified,
+        changeFrequency: "yearly" as const,
+        priority: 0.3,
+        alternates: { languages: alt("/privacy") },
+      },
+      {
+        url: `${base}/cookie`,
+        lastModified,
+        changeFrequency: "yearly" as const,
+        priority: 0.3,
+        alternates: { languages: alt("/cookie") },
+      },
       ...products.map((product) => ({
         url: `${base}/collezione/${product.id}`,
         lastModified,
